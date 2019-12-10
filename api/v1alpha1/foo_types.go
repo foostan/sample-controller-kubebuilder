@@ -24,20 +24,26 @@ import (
 
 // FooSpec defines the desired state of Foo
 type FooSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Format:=string
+	// the name of deployment which is owned by foo
+	DeploymentName string `json:"deploymentName"`
 
-	// Foo is an example field of Foo. Edit Foo_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Minimum=0
+	// the replicas of deployment which is owned by foo
+	Replicas *int32 `json:"replicas"`
 }
 
 // FooStatus defines the observed state of Foo
 type FooStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// this is equal deployment.status.availableReplicas
+	// +optional
+	AvailableReplicas int32 `json:"availableReplicas"`
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
 
 // Foo is the Schema for the foos API
 type Foo struct {
