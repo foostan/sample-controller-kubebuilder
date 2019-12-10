@@ -1,0 +1,3 @@
+domain: k8s.io
+repo: example.com/m/v2
+version: "2"
